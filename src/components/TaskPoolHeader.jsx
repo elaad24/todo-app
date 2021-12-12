@@ -6,7 +6,6 @@ const TaskPoolHeader = () => {
       <div>the task </div>
       <div>urgency level</div>
       <div>duration</div>
-      <div></div>
     </div>
   );
 };
