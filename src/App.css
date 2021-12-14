@@ -61,6 +61,7 @@
   height: 47%;
   padding: 0 1em;
   padding-top: 0.5em;
+  overflow-y: auto;
 }
 
 .double_stack {
