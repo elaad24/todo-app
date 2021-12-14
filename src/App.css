@@ -33,18 +33,23 @@
   border-bottom: 2px solid transparent;
 
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 0.25em 0;
 }
 
+.taskHeader {
+  width: 45%;
+}
+
 .TaskPoolHeaders {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   text-transform: capitalize;
   font-size: larger;
   text-decoration: underline;
   font-weight: 750;
+  text-align: center;
 }
 
 .HalfTaskPoll {
@@ -63,4 +68,9 @@
   display: flex;
   flex-direction: column;
   gap: 2em;
+}
+
+.miniTitle {
+  font-size: 1em;
+  font-weight: 700;
 }
