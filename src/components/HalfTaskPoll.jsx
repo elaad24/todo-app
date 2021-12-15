@@ -4,7 +4,12 @@ import TaskPoolHeader from "./TaskPoolHeader";
 import { Accordion } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getUrgentToDos, getCompletedToDos } from "../services/todoServises";
+import {
+  getUrgentToDos,
+  getCompletedToDos,
+  setTodoAsCompleted,
+  setTodoAsUnCompleted,
+} from "../services/todoServises";
 
 const HalfTaskPoll = ({ header, data }) => {
   let specialStyle = "";
@@ -13,6 +18,16 @@ const HalfTaskPoll = ({ header, data }) => {
   }
 
   let [toDos, setToDos] = useState([]);
+
+  const Assignment = async (id) => {
+    if (header == "completed") {
+      await setTodoAsUnCompleted(id);
+      window.location.reload();
+    } else {
+      await setTodoAsCompleted(id);
+      window.location.reload();
+    }
+  };
 
   useEffect(async () => {
     if (header == "completed") {
@@ -58,6 +73,36 @@ const HalfTaskPoll = ({ header, data }) => {
                         <span className="miniTitle"> Description:</span>
                         {todo.description}
                       </p>
+                    </div>
+                    <hr />
+                    <div className="d-flex justify-content-around">
+                      <div>
+                        <b>
+                          {header == "completed" ? (
+                            <span> set as uncomplted</span>
+                          ) : (
+                            <span> set as complete</span>
+                          )}
+                        </b>
+                      </div>
+                      <div>
+                        <button
+                          className={
+                            header == "completed"
+                              ? "btn btn-outline-danger"
+                              : "btn btn-outline-success"
+                          }
+                          onClick={() => Assignment(todo.id)}
+                        >
+                          <b>
+                            {header == "completed" ? (
+                              <span> uncomplted &#10007;</span>
+                            ) : (
+                              <span> complted &#10003;</span>
+                            )}
+                          </b>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 }

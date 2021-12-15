@@ -14,3 +14,6 @@ export function getCompletedToDos() {
 export function setTodoAsCompleted(todoID) {
   return http.put(`${apiUrl}/accomplished?id=${todoID}`);
 }
+export function setTodoAsUnCompleted(todoID) {
+  return http.put(`${apiUrl}/unaccomplished?id=${todoID}`);
+}
