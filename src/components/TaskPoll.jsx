@@ -3,7 +3,7 @@ import Task from "./Task";
 import TaskPoolHeader from "./TaskPoolHeader";
 import { Accordion } from "react-bootstrap";
 
-import { getAllToDos } from "../services/todoServises";
+import { getAllToDos, setTodoAsCompleted } from "../services/todoServises";
 
 const TaskPoll = ({ header, data }) => {
   let [toDos, setToDos] = useState([]);
@@ -13,6 +13,11 @@ const TaskPoll = ({ header, data }) => {
     console.log(data);
     await setToDos(data);
   }, []);
+
+  const setAsCompleted = async (id) => {
+    await setTodoAsCompleted(id);
+    window.location.reload();
+  };
 
   return (
     <div className="taskPool ">
@@ -45,6 +50,20 @@ const TaskPoll = ({ header, data }) => {
                         <span className="miniTitle"> Description:</span>
                         {todo.description}
                       </p>
+                    </div>
+                    <hr />
+                    <div className="d-flex justify-content-around">
+                      <div>
+                        <b> set as complete</b>
+                      </div>
+                      <div>
+                        <button
+                          className="btn btn-outline-success"
+                          onClick={() => setAsCompleted(todo.id)}
+                        >
+                          <b> complted &#10003; </b>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 }
