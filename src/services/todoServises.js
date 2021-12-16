@@ -17,3 +17,9 @@ export function setTodoAsCompleted(todoID) {
 export function setTodoAsUnCompleted(todoID) {
   return http.put(`${apiUrl}/unaccomplished?id=${todoID}`);
 }
+export function addNewTodo(todoData) {
+  return http.post(`${apiUrl}/add`, todoData);
+}
+export function updateTodo(todoData) {
+  return http.put(`${apiUrl}/update`, todoData);
+}
