@@ -9,7 +9,11 @@ import {
   getCompletedToDos,
   setTodoAsCompleted,
   setTodoAsUnCompleted,
+  deleteTodo,
+  updateTodo,
 } from "../services/todoServises";
+
+/* pancil code U+270E  */
 
 const HalfTaskPoll = ({ header, data }) => {
   let specialStyle = "";
@@ -19,6 +23,7 @@ const HalfTaskPoll = ({ header, data }) => {
 
   let [toDos, setToDos] = useState([]);
 
+  // task that detarmin by if the task is complited or not
   const Assignment = async (id) => {
     if (header == "completed") {
       await setTodoAsUnCompleted(id);
@@ -26,6 +31,17 @@ const HalfTaskPoll = ({ header, data }) => {
     } else {
       await setTodoAsCompleted(id);
       window.location.reload();
+    }
+  };
+
+  // task that detarmin by if the task is complited or not
+  const extraAssignment = async (todoData) => {
+    if (header == "completed") {
+      await deleteTodo(todoData.id);
+      window.location.reload();
+    } else {
+      /* need to connect to item model with edit type  */
+      // await updateTodo(todoData);
     }
   };
 
@@ -99,6 +115,24 @@ const HalfTaskPoll = ({ header, data }) => {
                               <span> uncomplted &#10007;</span>
                             ) : (
                               <span> complted &#10003;</span>
+                            )}
+                          </b>
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={
+                            header == "completed"
+                              ? "btn btn-outline-danger"
+                              : "btn btn-outline-warning"
+                          }
+                          onClick={() => extraAssignment(todo)}
+                        >
+                          <b>
+                            {header == "completed" ? (
+                              <span> delete &#x1f5d1; </span>
+                            ) : (
+                              <span> edit &#9998;</span>
                             )}
                           </b>
                         </button>
