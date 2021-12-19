@@ -48,39 +48,46 @@ const ItemModal = ({
     setDescriptionError("");
     setAddByError("");
     if (
-      typeof titleRef != "string" &&
-      titleRef.length <= 2 &&
-      titleRef.length >= 255
+      typeof titleRef.current.value != "string" ||
+      titleRef.current.value.length <= 2 ||
+      titleRef.current.value.length >= 255
     ) {
       setTittleError("title must be string and between 3 and 254 cher long");
       setValueError(true);
     }
-    if (typeof urgencyRef != "number" && urgencyRef <= 0 && urgencyRef >= 6) {
+    if (
+      typeof urgencyRef.current.value != "number" ||
+      urgencyRef.current.value <= 0 ||
+      urgencyRef.current.value >= 6
+    ) {
       setUrgencyError("urgency must be number  between 1 and 5");
       setValueError(true);
     }
+
     if (
-      typeof durationRef != "number" &&
-      durationRef <= 0 &&
-      durationRef >= 9999999
+      typeof durationRef.current.value != "number" ||
+      durationRef.current.value <= 0 ||
+      durationRef.current.value >= 9999999
     ) {
       setdurationError("duration  must be number  between 1 and 100000");
       setValueError(true);
     }
+
     if (
-      typeof descriptionRef != "string" &&
-      descriptionRef.length <= 2 &&
-      descriptionRef.length >= 65000
+      typeof descriptionRef.current.value != "string" ||
+      descriptionRef.current.value.length <= 2 ||
+      descriptionRef.current.value.length >= 65000
     ) {
       setDescriptionError(
         "description must be string and between 3 and 65000 cher long"
       );
       setValueError(true);
     }
+
     if (
-      typeof addByRef != "string" &&
-      addByRef.length <= 2 &&
-      addByRef.length >= 255
+      typeof addByRef.current.value != "string" ||
+      addByRef.current.value.length <= 2 ||
+      addByRef.current.value.length >= 255
     ) {
       setAddByError("add By must be string and between 3 and 254 cher long");
       setValueError(true);
@@ -114,6 +121,7 @@ const ItemModal = ({
     valueChecker();
     if (valueError) {
       alert(valueError);
+      // error doesnot work
       // need to do something need to think about it
     } else {
       setTittleError("");
