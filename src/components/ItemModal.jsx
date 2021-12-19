@@ -1,7 +1,8 @@
 import { useRef } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import {} from "../services/todoServises";
+import { addNewTodo, updateTodo } from "../services/todoServises";
 
 const ItemModal = ({
   id,
@@ -35,19 +36,8 @@ const ItemModal = ({
   let [durationError, setdurationError] = useState("");
   let [descriptionError, setDescriptionError] = useState("");
   let [addByError, setAddByError] = useState("");
+  // represent if one of the values HAVE error init
   let [valueError, setValueError] = useState(false);
-
-  const task = {
-    id: idRef?.current,
-    title: titleRef?.current?.value,
-    urgency: urgencyRef?.current?.value,
-    duration: durationRef?.current?.value,
-    completed: completedRef?.current?.value,
-    description: descriptionRef?.current?.value,
-    addBy: addByRef?.current?.value,
-    addDate: addDateRef?.current?.value,
-    completedAt: completedAtRef?.current?.value,
-  };
 
   // function that check if all the value is valid
   const valueChecker = () => {
@@ -58,33 +48,29 @@ const ItemModal = ({
     setDescriptionError("");
     setAddByError("");
     if (
-      typeof task.title != "string" &&
-      task.title.length <= 2 &&
-      task.title.length >= 255
+      typeof titleRef != "string" &&
+      titleRef.length <= 2 &&
+      titleRef.length >= 255
     ) {
       setTittleError("title must be string and between 3 and 254 cher long");
       setValueError(true);
     }
-    if (
-      typeof task.urgency != "number" &&
-      task.urgency <= 0 &&
-      task.urgency >= 6
-    ) {
+    if (typeof urgencyRef != "number" && urgencyRef <= 0 && urgencyRef >= 6) {
       setUrgencyError("urgency must be number  between 1 and 5");
       setValueError(true);
     }
     if (
-      typeof task.duration != "number" &&
-      task.duration <= 0 &&
-      task.duration >= 9999999
+      typeof durationRef != "number" &&
+      durationRef <= 0 &&
+      durationRef >= 9999999
     ) {
       setdurationError("duration  must be number  between 1 and 100000");
       setValueError(true);
     }
     if (
-      typeof task.description != "string" &&
-      task.description.length <= 2 &&
-      task.description.length >= 65000
+      typeof descriptionRef != "string" &&
+      descriptionRef.length <= 2 &&
+      descriptionRef.length >= 65000
     ) {
       setDescriptionError(
         "description must be string and between 3 and 65000 cher long"
@@ -92,9 +78,9 @@ const ItemModal = ({
       setValueError(true);
     }
     if (
-      typeof task.addBy != "string" &&
-      task.addBy.length <= 2 &&
-      task.addBy.length >= 255
+      typeof addByRef != "string" &&
+      addByRef.length <= 2 &&
+      addByRef.length >= 255
     ) {
       setAddByError("add By must be string and between 3 and 254 cher long");
       setValueError(true);
@@ -102,8 +88,33 @@ const ItemModal = ({
   };
 
   const handleSubmit = async (e) => {
+    console.log(e);
+    console.log("FFFFFFFFFFFFFFFFFFF");
+    console.log(titleRef.current.value);
+    console.log(urgencyRef.current.value);
+    console.log(durationRef.current.value);
+    console.log(completedRef?.current?.value);
+    console.log(descriptionRef.current.value);
+    console.log(addByRef.current.value);
+    console.log(addDateRef?.current?.value);
+    console.log(completedAtRef?.current?.value);
+
+    const task = {
+      id: idRef?.current,
+      title: titleRef?.current?.value,
+      urgency: urgencyRef?.current?.value,
+      duration: durationRef?.current?.value,
+      completed: completedRef?.current?.value,
+      description: descriptionRef?.current?.value,
+      addBy: addByRef?.current?.value,
+      addDate: addDateRef?.current?.value,
+      completedAt: completedAtRef?.current?.value,
+    };
+
     valueChecker();
-    if (!valueError) {
+    if (valueError) {
+      alert(valueError);
+      // need to do something need to think about it
     } else {
       setTittleError("");
       setUrgencyError("");
@@ -111,7 +122,11 @@ const ItemModal = ({
       setDescriptionError("");
       setAddByError("");
       e.preventDefault();
-      if (submitAction == "add") {
+      if (submitAction === "add") {
+        await addNewTodo(task);
+        window.location.reload();
+      } else if (submitAction === "edit") {
+        await updateTodo(task);
       }
     }
   };
@@ -134,7 +149,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="text"
                 defaultValue={
-                  titleRef.current?.value == ""
+                  titleRef.current?.value === ""
                     ? titleRef.current?.value
                     : titleRef.current
                 }
@@ -157,7 +172,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="number"
                 defaultValue={
-                  urgencyRef.current?.value == ""
+                  urgencyRef.current?.value === ""
                     ? urgencyRef.current?.value
                     : urgencyRef.current
                 }
@@ -174,7 +189,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="number"
                 defaultValue={
-                  durationRef.current?.value == ""
+                  durationRef.current?.value === ""
                     ? durationRef.current?.value
                     : durationRef.current
                 }
@@ -191,7 +206,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="text"
                 defaultValue={
-                  descriptionRef.current?.value == ""
+                  descriptionRef.current?.value === ""
                     ? descriptionRef.current?.value
                     : descriptionRef.current
                 }
@@ -208,7 +223,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="text"
                 defaultValue={
-                  addByRef.current?.value == ""
+                  addByRef.current?.value === ""
                     ? addByRef.current?.value
                     : addByRef.current
                 }
@@ -224,7 +239,7 @@ const ItemModal = ({
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>
