@@ -23,3 +23,6 @@ export function addNewTodo(todoData) {
 export function updateTodo(todoData) {
   return http.put(`${apiUrl}/update`, todoData);
 }
+export function deleteTodo(todoID) {
+  return http.delete(`${apiUrl}/delete?todoID=${todoID}`);
+}
