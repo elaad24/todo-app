@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  todos: [],
-};
-
 export const todoSlice = createSlice({
-  name: "todoActions",
-  initialState,
+  name: "todo",
+  initialState: {
+    todos: [],
+  },
   reducers: {
     saveAllTodos: (state, action) => {
-      state.todos = [...action.payload];
+      // save all the payload as value
+      state.todos = action.payload;
     },
     saveNewTodo: (state, action) => {
-      state.todos = [...state, action.payload];
+      state.todos = [...state.todos, action.payload];
     },
     deleteTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id != action.payload.id);
