@@ -5,13 +5,12 @@ import { Accordion } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
-  getUrgentToDos,
-  getCompletedToDos,
   setTodoAsCompleted,
   setTodoAsUnCompleted,
   deleteTodo,
   updateTodo,
 } from "../services/todoServises";
+import ItemModal from "./ItemModal";
 
 /* pancil code U+270E  */
 
@@ -21,7 +20,7 @@ const HalfTaskPoll = ({ header, data }) => {
     specialStyle = "line-through";
   }
 
-  let [toDos, setToDos] = useState([]);
+  const [editModalData, setEditModalData] = useState({});
 
   // task that detarmin by if the task is complited or not
   const Assignment = async (id) => {
@@ -40,29 +39,18 @@ const HalfTaskPoll = ({ header, data }) => {
       await deleteTodo(todoData.id);
       window.location.reload();
     } else {
-      /* need to connect to item model with edit type  */
-      // await updateTodo(todoData);
+      setEditModalData(todoData);
+      console.log("todo data from half", todoData);
+      console.log("edit modal data from half", editModalData);
     }
   };
-
-  useEffect(async () => {
-    if (header == "completed") {
-      const { data } = await getCompletedToDos();
-      console.log(data);
-      await setToDos(data);
-    } else {
-      const { data } = await getUrgentToDos();
-      console.log(data);
-      await setToDos(data);
-    }
-  }, []);
 
   return (
     <div className="HalfTaskPoll ">
       <h2 className="header">{header}</h2>
       <TaskPoolHeader />
       <Accordion flush>
-        {toDos.map((todo) => {
+        {data.map((todo) => {
           const date = new Date(Date.parse(todo.add_date));
           const date_formeted = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
           return (
@@ -124,7 +112,7 @@ const HalfTaskPoll = ({ header, data }) => {
                           className={
                             header == "completed"
                               ? "btn btn-outline-danger"
-                              : "btn btn-outline-warning"
+                              : "btn"
                           }
                           onClick={() => extraAssignment(todo)}
                         >
@@ -132,7 +120,12 @@ const HalfTaskPoll = ({ header, data }) => {
                             {header == "completed" ? (
                               <span> delete &#x1f5d1; </span>
                             ) : (
-                              <span> edit &#9998;</span>
+                              <ItemModal
+                                btnTxt={"edit"}
+                                submitAction={"edit"}
+                                modalData={editModalData}
+                              />
+                              //{ <span> edit  &#9998;</span> }
                             )}
                           </b>
                         </button>
