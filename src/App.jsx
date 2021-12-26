@@ -28,6 +28,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(async () => {
+    // get all the data in the same time by witing for all of them
     const allPromises = await Promise.all([
       getAllToDos(),
       getUrgentToDos(),
@@ -39,10 +40,11 @@ function App() {
       urgents: allPromises[1].data,
       complited: allPromises[2].data,
     });
-
+    // save data in states
     setallTodosData(allPromises[0].data);
     setUrgentTodosData(allPromises[1].data);
     setCompletedTodosData(allPromises[2].data);
+    // save in redux the data
     dispatch(
       saveAllTodos({
         allTodos: allPromises[0].data,
@@ -59,11 +61,11 @@ function App() {
         <div className="double_stack ">
           <HalfTaskPoll
             header={"most urgent"}
-            data={""}
+            data={urgentTodosData}
             setModalData={setModalData}
             setModalState={setModalState}
           />
-          <HalfTaskPoll header={"completed"} data={""} />
+          <HalfTaskPoll header={"completed"} data={completedTodosData} />
         </div>
         <div>
           <ItemModal
