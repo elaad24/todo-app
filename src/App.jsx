@@ -19,41 +19,51 @@ function App() {
   const [allTodosData, setallTodosData] = useState([]);
   const [urgentTodosData, setUrgentTodosData] = useState([]);
   const [completedTodosData, setCompletedTodosData] = useState([]);
-  const [redux, setRedux] = useState({
-    allTodos: {},
-    urgents: {},
-    complited: {},
-  });
+  const [redux, setRedux] = useState([
+    { allTodos: {} },
+    { urgents: {} },
+    { complited: {} },
+  ]);
 
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    // get all the data in the same time by witing for all of them
-    const allPromises = await Promise.all([
-      getAllToDos(),
-      getUrgentToDos(),
-      getCompletedToDos(),
-    ]);
-    console.log(allPromises);
-    setRedux({
-      allTodos: allPromises[0].data,
-      urgents: allPromises[1].data,
-      complited: allPromises[2].data,
-    });
-    // save data in states
-    setallTodosData(allPromises[0].data);
-    setUrgentTodosData(allPromises[1].data);
-    setCompletedTodosData(allPromises[2].data);
-    // save in redux the data
-    dispatch(
-      saveAllTodos({
+  const todo = useSelector((state) => state.todos.todos);
+
+  useEffect(
+    async () => {
+      // get all the data in the same time by witing for all of them
+      const allPromises = await Promise.all([
+        getAllToDos(),
+        getUrgentToDos(),
+        getCompletedToDos(),
+      ]);
+      console.log(allPromises);
+      setRedux({
         allTodos: allPromises[0].data,
         urgents: allPromises[1].data,
         complited: allPromises[2].data,
-      })
-    );
-  }, []);
+      });
+      // save data in states
+      setallTodosData(allPromises[0].data);
+      setUrgentTodosData(allPromises[1].data);
+      setCompletedTodosData(allPromises[2].data);
+      // save in redux the data
+      dispatch(
+        saveAllTodos({
+          allTodos: allPromises[0].data,
+          urgents: allPromises[1].data,
+          complited: allPromises[2].data,
+        })
+      );
+    },
+    redux.allTodos == todo.allTodos &&
+      redux.urgents == todo.urgents &&
+      redux.complited == todo.complited
+      ? []
+      : [todo]
+  );
 
+  console.log(todo);
   return (
     <>
       <div className="App ">
@@ -74,6 +84,7 @@ function App() {
             submitAction={"add"}
             modalData={modalData}
           />
+          <button onClick={() => console.log(todo)}>test redux</button>
         </div>
       </div>
     </>
