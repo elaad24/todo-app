@@ -3,7 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const todoSlice = createSlice({
   name: "todo",
   initialState: {
-    todos: [],
+    todos: {
+      allTodos: [],
+      urgents: [],
+      complited: [],
+    },
   },
   reducers: {
     saveAllTodos: (state, action) => {
@@ -11,15 +15,29 @@ export const todoSlice = createSlice({
       state.todos = action.payload;
     },
     saveNewTodo: (state, action) => {
-      state.todos = [...state.todos, action.payload];
+      if (action.payload.urgency == 4 || action.payload.urgency == 5) {
+        state.todos = {
+          allTodos: [...state.todos.allTodos, action.payload],
+          urgents: [...state.todos.urgents, action.payload],
+          complited: [...state.todos.complited],
+        };
+      } else {
+        state.todos = {
+          allTodos: [...state.todos.allTodos, action.payload],
+          urgents: [...state.todos.urgents],
+          complited: [...state.todos.complited],
+        };
+      }
+      console.log("state.todos in redux slice ");
     },
-    deleteTodo: (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id != action.payload.id);
+
+    testBTN: (state, action) => {
+      console.log(state);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { saveAllTodos, saveNewTodo, deleteTodo } = todoSlice.actions;
+export const { saveAllTodos, saveNewTodo, testBTN } = todoSlice.actions;
 
 export default todoSlice.reducer;
