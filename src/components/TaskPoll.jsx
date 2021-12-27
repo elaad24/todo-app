@@ -6,14 +6,6 @@ import { Accordion } from "react-bootstrap";
 import { getAllToDos, setTodoAsCompleted } from "../services/todoServises";
 
 const TaskPoll = ({ header, data }) => {
-  let [toDos, setToDos] = useState([]);
-
-  useEffect(async () => {
-    const { data } = await getAllToDos();
-    console.log(data);
-    await setToDos(data);
-  }, []);
-
   const setAsCompleted = async (id) => {
     await setTodoAsCompleted(id);
     window.location.reload();
@@ -24,7 +16,7 @@ const TaskPoll = ({ header, data }) => {
       <h2 className="header">{header}</h2>
       <TaskPoolHeader />
       <Accordion flush>
-        {toDos.map((todo) => {
+        {data.map((todo) => {
           const date = new Date(Date.parse(todo.add_date));
           const date_formeted = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
           return (
