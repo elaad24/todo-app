@@ -3,12 +3,10 @@ import Task from "./Task";
 import TaskPoolHeader from "./TaskPoolHeader";
 import { Accordion } from "react-bootstrap";
 import { useState } from "react";
-import { useEffect } from "react";
 import {
   setTodoAsCompleted,
   setTodoAsUnCompleted,
   deleteTodo,
-  updateTodo,
 } from "../services/todoServises";
 import ItemModal from "./ItemModal";
 
@@ -16,7 +14,7 @@ import ItemModal from "./ItemModal";
 
 const HalfTaskPoll = ({ header, data }) => {
   let specialStyle = "";
-  if (header.toLowerCase() == "completed") {
+  if (header.toLowerCase() === "completed") {
     specialStyle = "line-through";
   }
 
@@ -24,7 +22,7 @@ const HalfTaskPoll = ({ header, data }) => {
 
   // task that detarmin by if the task is complited or not
   const Assignment = async (id) => {
-    if (header == "completed") {
+    if (header === "completed") {
       await setTodoAsUnCompleted(id);
       window.location.reload();
     } else {
@@ -35,7 +33,7 @@ const HalfTaskPoll = ({ header, data }) => {
 
   // task that detarmin by if the task is complited or not
   const extraAssignment = async (todoData) => {
-    if (header == "completed") {
+    if (header === "completed") {
       await deleteTodo(todoData.id);
       window.location.reload();
     } else {
@@ -80,7 +78,7 @@ const HalfTaskPoll = ({ header, data }) => {
                     <div className="d-flex justify-content-around">
                       <div>
                         <b>
-                          {header == "completed" ? (
+                          {header === "completed" ? (
                             <span> set as uncomplted</span>
                           ) : (
                             <span> set as complete</span>
@@ -90,14 +88,14 @@ const HalfTaskPoll = ({ header, data }) => {
                       <div>
                         <button
                           className={
-                            header == "completed"
+                            header === "completed"
                               ? "btn btn-outline-danger"
                               : "btn btn-outline-success"
                           }
                           onClick={() => Assignment(todo.id)}
                         >
                           <b>
-                            {header == "completed" ? (
+                            {header === "completed" ? (
                               <span> uncomplted &#10007;</span>
                             ) : (
                               <span> complted &#10003;</span>
@@ -108,14 +106,14 @@ const HalfTaskPoll = ({ header, data }) => {
                       <div>
                         <button
                           className={
-                            header == "completed"
+                            header === "completed"
                               ? "btn btn-outline-danger"
                               : "btn"
                           }
                           onClick={() => extraAssignment(todo)}
                         >
                           <b>
-                            {header == "completed" ? (
+                            {header === "completed" ? (
                               <span> delete &#x1f5d1; </span>
                             ) : (
                               <ItemModal

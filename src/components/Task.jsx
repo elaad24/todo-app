@@ -29,6 +29,10 @@ const Task = ({ taskHeader, urgencyNumber, duration, style }) => {
       borderColor = "rgb(0,187,106)";
       urgencyImage = low;
       break;
+    default:
+      borderColor = "rgb(0,187,106)";
+      urgencyImage = low;
+      break;
   }
   return (
     <div

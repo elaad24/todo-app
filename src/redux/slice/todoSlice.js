@@ -15,7 +15,7 @@ export const todoSlice = createSlice({
       state.todos = action.payload;
     },
     saveNewTodo: (state, action) => {
-      if (action.payload.urgency == 4 || action.payload.urgency == 5) {
+      if (action.payload.urgency === 4 || action.payload.urgency === 5) {
         state.todos = {
           allTodos: [...state.todos.allTodos, action.payload],
           urgents: [...state.todos.urgents, action.payload],

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import Task from "./Task";
 import TaskPoolHeader from "./TaskPoolHeader";
 import { Accordion } from "react-bootstrap";
 
-import { getAllToDos, setTodoAsCompleted } from "../services/todoServises";
+import { setTodoAsCompleted } from "../services/todoServises";
 
 const TaskPoll = ({ header, data }) => {
   const setAsCompleted = async (id) => {
