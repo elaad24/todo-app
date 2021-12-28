@@ -37,7 +37,6 @@ function App() {
         getUrgentToDos(),
         getCompletedToDos(),
       ]);
-      console.log(allPromises);
       setRedux({
         allTodos: allPromises[0].data,
         urgents: allPromises[1].data,
@@ -63,7 +62,6 @@ function App() {
       : [todo]
   );
 
-  console.log(todo);
   return (
     <>
       <div className="App ">
@@ -84,7 +82,6 @@ function App() {
             submitAction={"add"}
             modalData={modalData}
           />
-          <button onClick={() => console.log(todo)}>test redux</button>
         </div>
       </div>
     </>

@@ -18,7 +18,6 @@ const ItemModal = ({ modalData, submitAction, ModalState, btnTxt }) => {
     btnColor = "outline-warning";
   }
 
-  console.log(submitAction);
   const idRef = useRef(modalData.id);
   const titleRef = useRef(modalData.task_header);
   const urgencyRef = useRef(modalData.urgency);
@@ -95,17 +94,6 @@ const ItemModal = ({ modalData, submitAction, ModalState, btnTxt }) => {
   };
 
   const handleSubmit = async (e) => {
-    /*     console.log(e);
-    console.log("FFFFFFFFFFFFFFFFFFF");
-    console.log(titleRef.current.value);
-    console.log(urgencyRef.current.value);
-    console.log(durationRef.current.value);
-    console.log(completedRef?.current?.value);
-    console.log(descriptionRef.current.value);
-    console.log(addByRef.current.value);
-    console.log(addDateRef?.current?.value);
-    console.log(completedAtRef?.current?.value);
- */
     const task = {
       id: modalData.id ? modalData.id : undefined,
       title: titleRef?.current?.value,
@@ -122,7 +110,6 @@ const ItemModal = ({ modalData, submitAction, ModalState, btnTxt }) => {
         : null,
     };
 
-    console.log(task);
     valueChecker();
     if (valueError) {
       alert(valueError);

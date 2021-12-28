@@ -40,8 +40,6 @@ const HalfTaskPoll = ({ header, data }) => {
       window.location.reload();
     } else {
       setEditModalData(todoData);
-      console.log("todo data from half", todoData);
-      console.log("edit modal data from half", editModalData);
     }
   };
 

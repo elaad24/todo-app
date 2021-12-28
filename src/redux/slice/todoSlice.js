@@ -28,11 +28,6 @@ export const todoSlice = createSlice({
           complited: [...state.todos.complited],
         };
       }
-      console.log("state.todos in redux slice ");
-    },
-
-    testBTN: (state, action) => {
-      console.log(state);
     },
   },
 });
