@@ -46,14 +46,14 @@ const TaskPoll = ({ header, data }) => {
                     <hr />
                     <div className="d-flex justify-content-around">
                       <div>
-                        <b> set as complete</b>
+                        <b className="TaskPoolHeaders"> set as complete</b>
                       </div>
                       <div>
                         <button
                           className="btn btn-outline-success"
                           onClick={() => setAsCompleted(todo.id)}
                         >
-                          <b> complted &#10003; </b>
+                          <b className="TaskPoolHeaders"> complted &#10003; </b>
                         </button>
                       </div>
                     </div>

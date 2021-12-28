@@ -75,3 +75,107 @@
   font-size: 1em;
   font-weight: 700;
 }
+
+.urgencyIMG {
+  width: 110px;
+}
+
+@media screen and (max-width: 1024px) {
+  .App {
+    justify-content: space-between;
+  }
+  .TaskPoolHeaders {
+    font-size: 1.1em;
+    font-weight: 750;
+    justify-content: space-between;
+  }
+
+  .taskHeader {
+    width: 45%;
+  }
+
+  .urgencyIMG {
+    width: 80px;
+  }
+
+  .miniTitle {
+    font-size: 0.9em;
+    font-weight: 700;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .App {
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+  }
+
+  .taskPool {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 75%;
+  }
+
+  .TaskPoolHeaders {
+    font-size: 1.1em;
+    font-weight: 750;
+    justify-content: space-between;
+  }
+
+  .taskHeader {
+    width: 45%;
+  }
+
+  .double_stack {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .urgencyIMG {
+    width: 110px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .App {
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+  }
+
+  .taskPool {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 95%;
+  }
+
+  .TaskPoolHeaders {
+    font-size: 1em;
+    font-weight: 750;
+    justify-content: space-between;
+  }
+
+  .taskHeader {
+    width: 45%;
+  }
+
+  .double_stack {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .urgencyIMG {
+    width: 75px;
+  }
+
+  .miniTitle {
+    font-size: 0.8em;
+    font-weight: 700;
+  }
+}

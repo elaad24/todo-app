@@ -3,7 +3,7 @@ import React from "react";
 const TaskPoolHeader = () => {
   return (
     <div className="TaskPoolHeaders">
-      <div className="taskHeader">the task </div>
+      <div className="">the task </div>
       <div>urgency level</div>
       <div>duration</div>
     </div>

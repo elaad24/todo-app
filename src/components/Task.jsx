@@ -37,7 +37,7 @@ const Task = ({ taskHeader, urgencyNumber, duration, style }) => {
     >
       <div className="taskHeader">{taskHeader}</div>
       <div>
-        <img width="110px" src={urgencyImage} alt="{urgencyImage}" />
+        <img className="urgencyIMG" src={urgencyImage} alt="{urgencyImage}" />
       </div>
       <div>{duration} min</div>
     </div>
