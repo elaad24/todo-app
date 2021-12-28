@@ -2,34 +2,32 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { saveNewTodo } from "../redux/slice/todoSlice";
 import { addNewTodo, updateTodo } from "../services/todoServises";
 
-const ItemModal = ({
-  id,
-  title,
-  urgency,
-  duration,
-  completed,
-  description,
-  addBy,
-  addDate,
-  completedAt,
-  submitAction,
-}) => {
-  const [show, setShow] = useState(false);
+const ItemModal = ({ modalData, submitAction, ModalState, btnTxt }) => {
+  const [show, setShow] = useState(ModalState);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  let btnColor = "";
+  if (submitAction === "add") {
+    btnColor = "primary";
+  } else if (submitAction === "edit") {
+    btnColor = "outline-warning";
+  }
 
-  const idRef = useRef(id);
-  const titleRef = useRef(title);
-  const urgencyRef = useRef(urgency);
-  const durationRef = useRef(duration);
-  const completedRef = useRef(completed);
-  const descriptionRef = useRef(description);
-  const addByRef = useRef(addBy);
-  const addDateRef = useRef(addDate);
-  const completedAtRef = useRef(completedAt);
+  console.log(submitAction);
+  const idRef = useRef(modalData.id);
+  const titleRef = useRef(modalData.task_header);
+  const urgencyRef = useRef(modalData.urgency);
+  const durationRef = useRef(modalData.duration);
+  const completedRef = useRef(modalData.completed);
+  const descriptionRef = useRef(modalData.description);
+  const addByRef = useRef(modalData.add_by);
+  const addDateRef = useRef(modalData.add_date);
+  const completedAtRef = useRef(modalData.completedAt);
 
   let [tittleError, setTittleError] = useState("");
   let [urgencyError, setUrgencyError] = useState("");
@@ -38,6 +36,8 @@ const ItemModal = ({
   let [addByError, setAddByError] = useState("");
   // represent if one of the values HAVE error init
   let [valueError, setValueError] = useState(false);
+
+  const dispatch = useDispatch();
 
   // function that check if all the value is valid
   const valueChecker = () => {
@@ -95,7 +95,7 @@ const ItemModal = ({
   };
 
   const handleSubmit = async (e) => {
-    console.log(e);
+    /*     console.log(e);
     console.log("FFFFFFFFFFFFFFFFFFF");
     console.log(titleRef.current.value);
     console.log(urgencyRef.current.value);
@@ -105,44 +105,46 @@ const ItemModal = ({
     console.log(addByRef.current.value);
     console.log(addDateRef?.current?.value);
     console.log(completedAtRef?.current?.value);
-
+ */
     const task = {
-      id: idRef?.current,
+      id: modalData.id ? modalData.id : undefined,
       title: titleRef?.current?.value,
       urgency: urgencyRef?.current?.value,
       duration: durationRef?.current?.value,
-      completed: completedRef?.current?.value,
+      completed: completedRef?.current?.value
+        ? completedRef?.current?.value
+        : 0,
       description: descriptionRef?.current?.value,
       addBy: addByRef?.current?.value,
-      addDate: addDateRef?.current?.value,
-      completedAt: completedAtRef?.current?.value,
+      addDate: Date.parse(modalData.add_date),
+      completedAt: completedAtRef?.current?.value
+        ? completedAtRef?.current?.value
+        : null,
     };
 
+    console.log(task);
     valueChecker();
     if (valueError) {
       alert(valueError);
       // error doesnot work
       // need to do something need to think about it
     } else {
-      setTittleError("");
-      setUrgencyError("");
-      setdurationError("");
-      setDescriptionError("");
-      setAddByError("");
       e.preventDefault();
       if (submitAction === "add") {
         await addNewTodo(task);
-        window.location.reload();
+        handleClose();
+        dispatch(saveNewTodo(task));
       } else if (submitAction === "edit") {
         await updateTodo(task);
+        window.location.reload();
       }
     }
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        add new todo
+      <Button variant={btnColor} onClick={handleShow}>
+        {btnTxt}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -157,9 +159,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="text"
                 defaultValue={
-                  titleRef.current?.value === ""
-                    ? titleRef.current?.value
-                    : titleRef.current
+                  modalData.task_header === "" ? "" : modalData.task_header
                 }
                 ref={titleRef}
                 minLength="3"
@@ -179,11 +179,7 @@ const ItemModal = ({
               <Form.Control
                 className="placeholder-danger"
                 type="number"
-                defaultValue={
-                  urgencyRef.current?.value === ""
-                    ? urgencyRef.current?.value
-                    : urgencyRef.current
-                }
+                defaultValue={modalData.urgency === "" ? "" : modalData.urgency}
                 ref={urgencyRef}
                 min="1"
                 max="5"
@@ -197,9 +193,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="number"
                 defaultValue={
-                  durationRef.current?.value === ""
-                    ? durationRef.current?.value
-                    : durationRef.current
+                  modalData.duration === "" ? "" : modalData.duration
                 }
                 ref={durationRef}
                 min="0"
@@ -214,9 +208,7 @@ const ItemModal = ({
                 className="placeholder-danger"
                 type="text"
                 defaultValue={
-                  descriptionRef.current?.value === ""
-                    ? descriptionRef.current?.value
-                    : descriptionRef.current
+                  modalData.description === "" ? "" : modalData.description
                 }
                 ref={descriptionRef}
                 minLength="3"
@@ -230,11 +222,7 @@ const ItemModal = ({
               <Form.Control
                 className="placeholder-danger"
                 type="text"
-                defaultValue={
-                  addByRef.current?.value === ""
-                    ? addByRef.current?.value
-                    : addByRef.current
-                }
+                defaultValue={modalData.add_by === "" ? "" : modalData.add_by}
                 ref={addByRef}
                 minLength="2"
                 placeholder={addByError}
